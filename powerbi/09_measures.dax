@@ -1,0 +1,121 @@
+-- AMP-US-OPS-WKLY-2026Q3
+-- Medidas v1. Formato indicado en comentario.
+-- Filtros globales viven en el mart (US / USD / terna / no-B2B).
+-- No redefinir GMV aquí.
+
+-- ===== Base =====
+
+GMV USD = 
+SUMX (
+    FILTER ( fct_order_items_us, fct_order_items_us[gmv_eligible_flag] = TRUE () ),
+    fct_order_items_us[item_price_amt] * fct_order_items_us[quantity_ordered]
+)
+-- Format: $#,##0,,,.0M  or  $#,##0
+
+Orders = 
+CALCULATE (
+    DISTINCTCOUNT ( fct_order_items_us[order_id] ),
+    fct_order_items_us[gmv_eligible_flag] = TRUE ()
+)
+-- Format: #,##0
+
+Units = 
+CALCULATE (
+    SUM ( fct_order_items_us[quantity_ordered] ),
+    fct_order_items_us[gmv_eligible_flag] = TRUE ()
+)
+-- Format: #,##0
+
+AOV = DIVIDE ( [GMV USD], [Orders] )
+-- Format: $#,##0.00
+
+Ordered Units Gross = SUM ( fct_order_items_us[quantity_ordered] )
+-- denominador cancel (incluye CBS)
+
+Cancelled Units = SUM ( fct_cancellations_us[cancelled_qty] )
+
+Cancel Rate = DIVIDE ( [Cancelled Units], [Ordered Units Gross] )
+-- Format: 0.0%
+
+CBS Units =
+CALCULATE (
+    SUM ( fct_cancellations_us[cancelled_qty] ),
+    fct_cancellations_us[cancelled_before_ship_flag] = TRUE ()
+)
+
+CBS Share of Cancels = DIVIDE ( [CBS Units], [Cancelled Units] )
+-- Format: 0.0%
+
+Late Shipment Rate =
+DIVIDE (
+    CALCULATE ( COUNTROWS ( fct_order_items_us ), fct_order_items_us[is_late_ship_flag] = TRUE () ),
+    CALCULATE ( COUNTROWS ( fct_order_items_us ), fct_order_items_us[cancelled_before_ship_flag] = FALSE () )
+)
+-- Format: 0.0%
+-- v1.1: reemplazar COUNTROWS por shipments reales cuando exista la tabla.
+
+A2Z Claim Rate = DIVIDE ( [A2Z Claims], [Orders] )
+-- A2Z Claims es medida placeholder 0 hasta el feed SP claims.
+A2Z Claims = 0
+
+Return Rate =
+DIVIDE ( [Returned Units], [Shipped Units] )
+-- v1: si fct_returns_us no está, dejar blank.
+Returned Units = 0
+Shipped Units =
+CALCULATE (
+    SUM ( fct_order_items_us[quantity_ordered] ),
+    fct_order_items_us[cancelled_before_ship_flag] = FALSE ()
+)
+
+Active Sellers =
+CALCULATE (
+    DISTINCTCOUNT ( fct_order_items_us[seller_sk] ),
+    fct_order_items_us[gmv_eligible_flag] = TRUE ()
+)
+
+-- ===== Time intelligence (semana fiscal, no TIMEINTEL ISO) =====
+
+Baseline Weeks :=
+DATESBETWEEN (
+    dim_date[date_et],
+    DATE ( 2026, 5, 24 ), -- W22 start
+    DATE ( 2026, 7, 4 )   -- W27 end
+)
+
+GMV Baseline Avg Weekly =
+AVERAGEX (
+    VALUES ( dim_date[fiscal_week] ),
+    CALCULATE ( [GMV USD], dim_date[date_et] IN [Baseline Weeks] )
+)
+-- Usar una tabla puente baseline_week en prod; esta versión es ilustrativa.
+
+GMV Δ vs Baseline % =
+VAR Cur = [GMV USD]
+VAR Base =
+    CALCULATE ( [GMV USD], REMOVEFILTERS ( dim_date ), dim_date[fiscal_week] IN { "2026W22", "2026W23", "2026W24", "2026W25", "2026W26", "2026W27" } ) / 6
+RETURN DIVIDE ( Cur - Base, Base )
+-- Format: +0.0%;-0.0%
+
+Cancel Baseline =
+CALCULATE ( [Cancel Rate], REMOVEFILTERS ( dim_date ), dim_date[fiscal_week] IN { "2026W22", "2026W23", "2026W24", "2026W25", "2026W26", "2026W27" } )
+
+Cancel Δ vs Baseline pp = ( [Cancel Rate] - [Cancel Baseline] ) * 100
+-- Format: +0.00;-0.00  (percentage points)
+
+Orders Δ vs Baseline % =
+VAR Base =
+    CALCULATE ( [Orders], REMOVEFILTERS ( dim_date ), dim_date[fiscal_week] IN { "2026W22", "2026W23", "2026W24", "2026W25", "2026W26", "2026W27" } ) / 6
+RETURN DIVIDE ( [Orders] - Base, Base )
+
+GMV WoW % =
+VAR Prev =
+    CALCULATE ( [GMV USD], DATEADD ( dim_date[date_et], -7, DAY ) )
+RETURN DIVIDE ( [GMV USD] - Prev, Prev )
+
+-- ===== Reconcil (hidden) =====
+
+GMV Flash Official = SUM ( fin_gmv_flash[gmv_usd] )
+
+GMV vs Flash % = DIVIDE ( [GMV USD] - [GMV Flash Official], [GMV Flash Official] )
+-- Format: 0.00%

@@ -1,0 +1,37 @@
+snapshot_date,seller_id,asin,fulfillment_channel,on_hand_units,oos_flag,aged_90_units,ipi_score,category_l1
+2026-08-10,S001,B0HK001,AFN,0,true,0,420,Home & Kitchen
+2026-08-10,S001,B0HK002,AFN,4,true,0,380,Home & Kitchen
+2026-08-10,S001,B0HK003,AFN,120,false,0,380,Home & Kitchen
+2026-08-10,S002,B0HK001,AFN,4,false,8,380,Home & Kitchen
+2026-08-10,S002,B0HK002,AFN,120,false,8,510,Home & Kitchen
+2026-08-10,S002,B0HK003,AFN,4,false,0,380,Home & Kitchen
+2026-08-10,S003,B0HK001,MFN,4,false,0,460,Home & Kitchen
+2026-08-10,S003,B0HK002,MFN,4,false,0,380,Home & Kitchen
+2026-08-10,S003,B0HK003,MFN,0,false,0,460,Home & Kitchen
+2026-08-10,S004,B0SO001,MFN,120,false,0,510,Sports & Outdoors
+2026-08-10,S004,B0SO002,MFN,120,true,3,380,Sports & Outdoors
+2026-08-10,S004,B0SO003,MFN,120,false,8,460,Sports & Outdoors
+2026-08-10,S005,B0SO001,AFN,120,false,0,380,Sports & Outdoors
+2026-08-10,S005,B0SO002,AFN,4,false,0,420,Sports & Outdoors
+2026-08-10,S005,B0SO003,AFN,0,false,3,460,Sports & Outdoors
+2026-08-10,S006,B0SO001,MFN,4,false,0,460,Sports & Outdoors
+2026-08-10,S006,B0SO002,MFN,0,false,0,420,Sports & Outdoors
+2026-08-10,S006,B0SO003,MFN,4,false,0,420,Sports & Outdoors
+2026-08-10,S007,B0PE001,AFN,12,false,0,420,Pet Supplies
+2026-08-10,S007,B0PE002,AFN,0,false,3,460,Pet Supplies
+2026-08-10,S007,B0PE003,AFN,0,false,8,460,Pet Supplies
+2026-08-10,S008,B0PE001,MFN,4,false,3,510,Pet Supplies
+2026-08-10,S008,B0PE002,MFN,4,false,0,460,Pet Supplies
+2026-08-10,S008,B0PE003,MFN,120,false,8,510,Pet Supplies
+2026-08-10,S009,B0PE001,AFN,12,false,0,510,Pet Supplies
+2026-08-10,S009,B0PE002,AFN,0,false,0,420,Pet Supplies
+2026-08-10,S009,B0PE003,AFN,4,false,3,380,Pet Supplies
+2026-08-10,S010,B0PE001,MFN,40,false,3,460,Pet Supplies
+2026-08-10,S010,B0PE002,MFN,120,false,0,380,Pet Supplies
+2026-08-10,S010,B0PE003,MFN,120,false,0,380,Pet Supplies
+2026-08-10,S011,B0HK001,AFN,12,false,3,380,Home & Kitchen
+2026-08-10,S011,B0HK002,AFN,12,false,0,380,Home & Kitchen
+2026-08-10,S011,B0HK003,AFN,12,false,8,420,Home & Kitchen
+2026-08-10,S012,B0SO001,AFN,4,false,0,380,Sports & Outdoors
+2026-08-10,S012,B0SO002,AFN,120,false,0,380,Sports & Outdoors
+2026-08-10,S012,B0SO003,AFN,12,false,0,420,Sports & Outdoors

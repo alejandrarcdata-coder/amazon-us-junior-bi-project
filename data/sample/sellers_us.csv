@@ -1,0 +1,13 @@
+seller_id,seller_name,seller_state_us,primary_category_l1,active_flag,pref_fulfillment,marketplace_id,country_code
+S001,HappyHome US LLC,WA,Home & Kitchen,true,AFN,ATVPDKIKX0DER,US
+S002,KitchenNest Brands,CA,Home & Kitchen,true,AFN,ATVPDKIKX0DER,US
+S003,Oak & Linen Co,TX,Home & Kitchen,true,MFN,ATVPDKIKX0DER,US
+S004,TrailPeak Outdoors,CO,Sports & Outdoors,true,MFN,ATVPDKIKX0DER,US
+S005,SummitGear USA,OR,Sports & Outdoors,true,AFN,ATVPDKIKX0DER,US
+S006,CourtSide Sports,FL,Sports & Outdoors,true,MFN,ATVPDKIKX0DER,US
+S007,PawsFirst Pet Co,NY,Pet Supplies,true,AFN,ATVPDKIKX0DER,US
+S008,BarkHarbor LLC,IL,Pet Supplies,true,MFN,ATVPDKIKX0DER,US
+S009,WhiskerWell Inc,GA,Pet Supplies,true,AFN,ATVPDKIKX0DER,US
+S010,HomePet Bundle Co,NJ,Pet Supplies,true,MFN,ATVPDKIKX0DER,US
+S011,Pacific Bakeware,CA,Home & Kitchen,true,AFN,ATVPDKIKX0DER,US
+S012,Ridgeline Fitness,AZ,Sports & Outdoors,true,AFN,ATVPDKIKX0DER,US

@@ -1,0 +1,9 @@
+.DS_Store
+Thumbs.db
+*.tmp
+~$*
+.powerbi/
+*.pbix-backup
+.env
+.venv/
+__pycache__/
